@@ -1,3 +1,29 @@
+--1
+--somme n = sum [1..n]
+
+--3
+sommeDeXaY ::  Int -> Int -> Int
+sommeDeXaY x y = 
+	if x > y then
+		0
+	else
+		x + sommeDeXaY (x+1) y
+--4
+somme :: [Int] -> Int
+somme [] = 0
+somme (x:xs) = x + somme xs
+
+--5
+-- last
+last' :: [a] -> a
+last' [] = error "Liste vide, je fais une exception alors que c'est pas bien, soit disant impur"
+last' (_:x) = head (reverse x)
+
+-- init
+init' :: [a] -> [a]
+init' [] = error "Liste vide, je fais une exception alors que c'est pas bien, soit disant impur"
+init' (x:xs) = reverse (tail ((reverse (x:xs))))
+
 --6
 -- !!
 index :: [a] -> Int -> a
@@ -27,6 +53,7 @@ map' _ [] = []
 longueurList :: [Int] -> Int
 longueurList [] = 0
 longueurList (xs) = somme (map (^0) (xs))
+
 
 --9
 -- Récursive
