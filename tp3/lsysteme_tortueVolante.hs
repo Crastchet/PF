@@ -12,8 +12,11 @@ motSuivant :: Regles -> Mot -> Mot
 motSuivant r [] = []
 motSuivant r (x:xs) = (r x) ++ motSuivant r xs
 
---motSuivant'' :: Regles -> Mot -> Mot
---motSuivant'' r (x:xs) = take 1 (iterate (r x))
+motSuivant' :: Regles -> Mot -> Mot
+motSuivant' r xs = concat [r a | a<-xs]
+
+motSuivant'' :: Regles -> Mot -> Mot
+motSuivant'' r xs = concatMap r xs
 
 --2
 vonKoch :: Regles
