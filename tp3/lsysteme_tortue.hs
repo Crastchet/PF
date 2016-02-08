@@ -71,31 +71,30 @@ tourneADroite c ((x,y),cap) = ((x,y) , cap - angle c)
 filtreSymbolesTortue :: Config -> Mot -> Mot
 filtreSymbolesTortue c [] = []
 filtreSymbolesTortue c (x:xs) = if elem x (symbolesTortue c) then
-	x : filtreSymbolesTortue c xs
+  x : filtreSymbolesTortue c xs
 else
-	filtreSymbolesTortue c xs
+  filtreSymbolesTortue c xs
 
 
 type EtatDessin = (EtatTortue, Path)
 
 --8
-interpreteSymbole :: Config -> EtatDessin -> Symbole -> EtatDessin -- On ajoute la dernière position de la tortue à la liste des points Path, mais pas a nouvelle. On le fera dans interpreterMot_rep
-interpreteSymbole c ((pos,cap),ps) 'F' = (avance c (pos,cap),(pos:ps))
-interpreteSymbole c ((pos,cap),ps) '+' = (tourneAGauche c (pos,cap),(pos:ps))
-interpreteSymbole c ((pos,cap),ps) '-' = (tourneADroite c (pos,cap),(pos:ps))
+interpreteSymbole :: Config -> EtatDessin -> Symbole -> EtatDessin
+interpreteSymbole c (et,p) 'F' = let et2 = avance c et in (et2, p++[(fst et2)])    
+interpreteSymbole c (et,p) '+' = let et2 = tourneAGauche c et in (et2, p++[(fst et2)])
+interpreteSymbole c (et,p) '-' = let et2 = tourneADroite c et in (et2, p++[(fst et2)])
 
 --9
 interpreteMot :: Config -> Mot -> Picture
-interpreteMot c (xs) = line (interpreteMot_rep c ((etatInitial c),[]) (filtreSymbolesTortue c xs)) 
-
+interpreteMot c xs = let i = (etatInitial c) in Line (interpreteMot_rep c (i,[fst i]) (filtreSymbolesTortue c xs))
+    
 interpreteMot_rep :: Config -> EtatDessin -> Mot -> Path
-interpreteMot_rep c ((pos,cap),p) [] = pos : p -- C'est ici que j'ajoute la position courante de la tortue car elle ne s'ajoute pas à la liste des points Path dans EtatDessin
+interpreteMot_rep _ (et,p) [] = p
 interpreteMot_rep c ed (x:xs) = interpreteMot_rep c (interpreteSymbole c ed x) xs
 
 --10
 lsystemeAnime :: LSysteme -> Config -> Float -> Picture
-lsystemeAnime ls c instant = 
-  let i = round instant `mod` 15 in interpreteMot c (ls !! i)
+lsystemeAnime ls c instant = let i = round instant `mod` 6 in interpreteMot c (ls !! i)
 
 ------------------------------- TESTS -------------------------------
 vonKoch1 :: LSysteme
