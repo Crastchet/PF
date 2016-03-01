@@ -44,8 +44,26 @@ peigneGauche ((c,v):cvs) = Noeud c v (peigneGauche (cvs)) Feuille
 
 --5
 prop_hauteurPeigne xs = length xs == hauteur (peigneGauche xs)
+prop_hauteurPeigne' xs = length xs == hauteur' (peigneGauche xs)
 -- Elle vérifie que le peigne a été créé correctement à partir de la liste xs (en supposant que la fonction hauteur soit bonne). Vu que le peigne est un arbre qu'avec des sous arbres côté gauche, la taille de la liste et la hauteur de l'arbre doivent être pareils
 
+
+--6
+prop_taillePeigne xs = length xs == taille (peigneGauche xs)
+prop_taillePeigne' xs = length xs == taille' (peigneGauche xs)
+
+
+--7
+estComplet :: Arbre coul val -> Bool
+estComplet Feuille = True
+estComplet (Noeud c v g d) = estComplet g && estComplet d && (hauteur g == hauteur d)
+
+
+--8
+-- Peigne à gauche complet = arbre vide
+
+
+--9
 
 
 mytree = Noeud "b" 1 
@@ -58,4 +76,12 @@ mytree = Noeud "b" 1
 					(Noeud "b" 4
 						Feuille
 						Feuille)
-					Feuille)) 
+					Feuille))
+
+myTreeComplet = Noeud "b" 1 
+			(Noeud "b" 2 
+				(Noeud "b" 3 Feuille Feuille)
+				(Noeud "b" 3 Feuille Feuille))
+			(Noeud "b" 2 
+				(Noeud "b" 3 Feuille Feuille)
+				(Noeud "b" 3 Feuille Feuille))
