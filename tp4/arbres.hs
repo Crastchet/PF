@@ -27,10 +27,10 @@ taille Feuille = 0
 taille (Noeud c v g d) = taille g + taille d + 1
 
 hauteur' :: Arbre coul val -> Int
-hauteur' arb = fold (\_ g d -> (max g d) + 1) 0 arb
+hauteur' arb = fold (\_ _ g d -> (max g d) + 1) 0 arb
 
 taille' :: Arbre coul val -> Int
-taille' arb = fold (\_ g d -> g + d + 1) 0 arb
+taille' arb = fold (\_ _ g d -> g + d + 1) 0 arb
 
 mytree = Noeud "b" 1 
 			(Noeud "b" 2 
