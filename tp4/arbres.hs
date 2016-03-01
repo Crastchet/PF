@@ -1,3 +1,6 @@
+import Test.QuickCheck
+---------------------------------------------------
+
 --1
 data Arbre coul val =
 	Feuille
@@ -31,6 +34,19 @@ hauteur' arb = fold (\_ _ g d -> (max g d) + 1) 0 arb
 
 taille' :: Arbre coul val -> Int
 taille' arb = fold (\_ _ g d -> g + d + 1) 0 arb
+
+
+--4
+peigneGauche :: [(coul,val)] -> Arbre coul val
+peigneGauche [] = Feuille
+peigneGauche ((c,v):cvs) = Noeud c v (peigneGauche (cvs)) Feuille
+
+
+--5
+prop_hauteurPeigne xs = length xs == hauteur (peigneGauche xs)
+-- Elle vérifie que le peigne a été créé correctement à partir de la liste xs (en supposant que la fonction hauteur soit bonne). Vu que le peigne est un arbre qu'avec des sous arbres côté gauche, la taille de la liste et la hauteur de l'arbre doivent être pareils
+
+
 
 mytree = Noeud "b" 1 
 			(Noeud "b" 2 
