@@ -56,7 +56,7 @@ prop_taillePeigne' xs = length xs == taille' (peigneGauche xs)
 --7
 estComplet :: Arbre coul val -> Bool
 estComplet Feuille = True
-estComplet (Noeud c v g d) = estComplet g && estComplet d && (hauteur g == hauteur d)
+estComplet (Noeud _ _ g d) = estComplet g && estComplet d && (hauteur g == hauteur d)
 
 
 --8
@@ -64,6 +64,20 @@ estComplet (Noeud c v g d) = estComplet g && estComplet d && (hauteur g == haute
 
 
 --9
+complet :: Int -> [(c, a)] -> Arbre c a
+complet 0 _ = Feuille
+complet _ [] = error "Liste de couleurs valeurs vide"
+complet h xs = Noeud c v (complet (h-1) fg) (complet (h-1) fd)
+         where (fg, ((c,v):fd)) = splitAt (length xs `quot` 2) xs
+
+
+--10
+-- Fonction = repeat
+repeat' :: a -> [a]
+repeat' = iterate id
+
+
+--11
 
 
 mytree = Noeud "b" 1 
