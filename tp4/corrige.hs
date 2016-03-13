@@ -2,6 +2,10 @@ module ArbreBinaire where
 import Control.Concurrent (threadDelay)
 import Test.QuickCheck
 
+-- TP4 PF
+-- Maxime Maroine
+-- Marc Baloup
+
 -- question 1
 data Arbre c v = Noeud { coul :: c
                               , val :: v
@@ -218,4 +222,3 @@ main' :: IO ()
 main' = mapM_ ecrit abrs
     where ecrit a = do writeFile ("dot/arbre" ++ (show (taille a)) ++ ".dot") (dotise "ABR" couleurToString (\x -> [x]) a)
                        threadDelay 100000
-          abrs  = seqArbres "gcfxieqzrujlmdoywnbakhpvst" Feuille
