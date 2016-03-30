@@ -16,7 +16,7 @@ data Litteral = Entier Integer
               deriving (Show, Eq)
 
 -- Executer un Parser : runParser
--- Facilite les tests pour les exemple
+-- Facilite les tests pour les exemples
 parse :: Parser a -> String -> Resultat a
 parse = runParser
 
